@@ -45,7 +45,7 @@ namespace ZazerkalieProduce.SwfWorkers
                 {
                     Console.WriteLine("Execute exited with code=" + resultcode);
                 }
-                throw new ApplicationException("Critical error. Process stoped.");
+                throw new ApplicationException("Critical error. Process stopped.");
             }
             return XDocument.Load(xmlpath);
         }
@@ -88,7 +88,7 @@ namespace ZazerkalieProduce.SwfWorkers
                 {
                     Console.WriteLine("Execute exited with code=" + resultcode);
                 }
-                throw new ApplicationException("Критическая ошибка в процессе обработки. Приложение остановлено");
+                throw new ApplicationException("Fatal error during processing. Application stopped.");
             }
         }
 
@@ -109,7 +109,7 @@ namespace ZazerkalieProduce.SwfWorkers
                 if (this.options.Verbose)
                 {
                     Console.WriteLine(text + " not found");
-                    throw new ApplicationException("Critical error. Process stoped.");
+                    throw new ApplicationException("Critical error. Process stopped.");
                 }
             }
         }

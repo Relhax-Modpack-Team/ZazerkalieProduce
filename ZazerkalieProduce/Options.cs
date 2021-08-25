@@ -25,13 +25,13 @@ namespace ZazerkalieProduce
         [Option('i', "input", Required = true, HelpText = "Full path to the directory with .swf. Example: \"D:\\Games\\World_of_Tanks_clean\\Wot Tank Icon Maker\\Icons\\Zazerkalie_lab\\swfs\"")]
         public string InputPath { get; set; }
 
-        [Option('o', "ouput", Required = true, HelpText = "Full path to the otput directory where .swf should be placed. Example: \"D:\\Games\\World_of_Tanks_clean\\Wot Tank Icon Maker\\Icons\\Zazerkalie_by_BufferOverflow\\gui\\flash\"")]
+        [Option('o', "output", Required = true, HelpText = "Full path to the output directory where .swf should be placed. Example: \"D:\\Games\\World_of_Tanks_clean\\Wot Tank Icon Maker\\Icons\\Zazerkalie_by_BufferOverflow\\gui\\flash\"")]
         public string OutputPath { get; set; }
 
         [Option('s', "swf", Required = true, HelpText = "Name of flash file. Ex: battleLoading.swf")]
         public string SwfName { get; set; }
 
-        [Option('m', "mode", DefaultValue = "normal", HelpText = "Switch between normal and notext mode")]
+        [Option('m', "mode", DefaultValue = "normal", HelpText = "Switch between normal and no-text mode")]
         public string ModeStr { get; set; }
 
         public OutputMode Mode
@@ -47,7 +47,7 @@ namespace ZazerkalieProduce
             }
         }
 
-        [Option('l', "logffdec", DefaultValue = null, HelpText = "Enable/disable logging of convertation to xml or swf")]
+        [Option('l', "logffdec", DefaultValue = null, HelpText = "Enable/disable logging of conversion to xml or swf")]
         public bool? SystemConsoleLog { get; set; }
 
         [Option('v', "verbose", DefaultValue = true,
