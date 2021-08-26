@@ -13,7 +13,7 @@ namespace ZazerkalieProduce.SwfWorkers
         {
         }
 
-        public override string SwfName { get; set; } = "epicRandomPlayersPanel.swf";
+        public override string SwfName { get; } = "epicRandomPlayersPanel.swf";
 
         public override void DoUnmirror(ref XDocument xdoc)
         {
@@ -34,7 +34,7 @@ namespace ZazerkalieProduce.SwfWorkers
                 }
             }
 
-            if (options.Mode == Options.OutputMode.notext)
+            if (options.Mode == Options.OutputMode.clearAll || options.Mode == Options.OutputMode.clearTier)
             {
                 elements =
                 xdoc.Descendants()

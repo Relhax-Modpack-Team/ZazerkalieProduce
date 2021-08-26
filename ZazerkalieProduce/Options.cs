@@ -12,8 +12,9 @@ namespace ZazerkalieProduce
     {
         public enum OutputMode
         {
-            normal,
-            notext
+            showAll,
+            clearTier,
+            clearAll
         }
 
         [Option('j', "java", HelpText = "Full path to the java.exe. Example: \"C:\\Program Files (x86)\\Java\\jre1.8.0_25\\bin\\java.exe\"")]
@@ -31,7 +32,7 @@ namespace ZazerkalieProduce
         [Option('s', "swf", Required = true, HelpText = "Name of flash file. Ex: battleLoading.swf")]
         public string SwfName { get; set; }
 
-        [Option('m', "mode", DefaultValue = "normal", HelpText = "Switch between normal and no-text mode")]
+        [Option('m', "mode", Required = true, HelpText = "Switch between normal and no-text mode")]
         public string ModeStr { get; set; }
 
         public OutputMode Mode
@@ -43,7 +44,7 @@ namespace ZazerkalieProduce
                 {
                     return mode;
                 }
-                return OutputMode.normal;
+                throw new ArgumentException("-mode was specified, but the value was invalid");
             }
         }
 

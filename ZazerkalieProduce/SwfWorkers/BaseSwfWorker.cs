@@ -16,7 +16,7 @@ namespace ZazerkalieProduce.SwfWorkers
         protected readonly string TempPath = "Temp";
         private static string lastId = null;
 
-        public abstract string SwfName { get; set; }
+        public abstract string SwfName { get; }
 
         public BaseSwfWorker(Options options)
         {

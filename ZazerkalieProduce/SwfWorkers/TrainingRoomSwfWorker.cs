@@ -14,7 +14,7 @@ namespace ZazerkalieProduce.SwfWorkers
         {
         }
         
-        public override string SwfName { get; set; } = "trainingRoom.swf";
+        public override string SwfName { get; } = "trainingRoom.swf";
 
         public override void DoUnmirror(ref XDocument xdoc)
         {
@@ -29,7 +29,7 @@ namespace ZazerkalieProduce.SwfWorkers
                 scaleX.SetValue(scaleX.Value.Replace("-", ""));
                 var TranslateX = matrix.Attribute("translateX");
                 int trX = int.Parse(TranslateX.Value);
-                if (options.Mode == Options.OutputMode.normal)
+                if (options.Mode == Options.OutputMode.showAll)
                 {
                     TranslateX.SetValue((trX - 1600).ToString());
                 }
@@ -38,18 +38,26 @@ namespace ZazerkalieProduce.SwfWorkers
                     TranslateX.SetValue((trX - 500).ToString());
                 }
             }
-            if (options.Mode == Options.OutputMode.notext)
+
+            if (options.Mode == Options.OutputMode.clearAll || options.Mode == Options.OutputMode.clearTier)
             {
-                elements =
-                xdoc.Descendants()
-                    .Where(x => x.Attribute("name") != null && (x.Attribute("name").Value == "vehicleLevelField"
-                        || x.Attribute("name").Value == "vehicleField"));
+                if (options.Mode == Options.OutputMode.clearTier)
+                {
+                    elements =
+                    xdoc.Descendants()
+                        .Where(x => x.Attribute("name") != null && (x.Attribute("name").Value == "vehicleLevelField"));
+                }
+                else
+                {
+                    elements =
+                    xdoc.Descendants()
+                        .Where(x => x.Attribute("name") != null && (x.Attribute("name").Value == "vehicleLevelField"
+                            || x.Attribute("name").Value == "vehicleField"));
+                }
+
                 foreach (var element in elements)
                 {
                     LogSprite(element, "Untexting sprite Id");
-                    //var matrix = element.Descendants().FirstOrDefault(x => x.Name.LocalName == "matrix");
-                    //var translateX = matrix.Attribute("translateX");
-                    //translateX.SetValue("999999");
                     element.SetAttributeValue("placeFlagHasVisible", "true");
                     element.SetAttributeValue("visible", "0");
                 }

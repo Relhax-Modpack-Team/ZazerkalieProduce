@@ -13,7 +13,7 @@ namespace ZazerkalieProduce.SwfWorkers
         {
         }
 
-        public override string SwfName { get; set; } = "rankedBattleLoading.swf";
+        public override string SwfName { get; } = "rankedBattleLoading.swf";
 
         public override void DoUnmirror(ref XDocument xdoc)
         {
@@ -30,7 +30,8 @@ namespace ZazerkalieProduce.SwfWorkers
                 int trX = int.Parse(TranslateX.Value);
                 TranslateX.SetValue((trX - 1600).ToString());
             }
-            if (options.Mode == Options.OutputMode.notext)
+
+            if (options.Mode == Options.OutputMode.clearAll || options.Mode == Options.OutputMode.clearTier)
             {
                 elements =
                 xdoc.Descendants()
