@@ -32,7 +32,7 @@ namespace ZazerkalieProduce
         [Option('s', "swf", Required = true, HelpText = "Name of flash file. Ex: battleLoading.swf")]
         public string SwfName { get; set; }
 
-        [Option('m', "mode", Required = true, HelpText = "Switch between normal and no-text mode")]
+        [Option('m', "mode", Required = true, HelpText = "Switch between showAll, clearTier and clearAll mode")]
         public string ModeStr { get; set; }
 
         public OutputMode Mode
@@ -51,8 +51,7 @@ namespace ZazerkalieProduce
         [Option('l', "logffdec", DefaultValue = null, HelpText = "Enable/disable logging of conversion to xml or swf")]
         public bool? SystemConsoleLog { get; set; }
 
-        [Option('v', "verbose", DefaultValue = true,
-          HelpText = "Prints all messages to standard output.")]
+        [Option('v', "verbose", DefaultValue = true, HelpText = "Prints all messages to standard output.")]
         public bool Verbose { get; set; }
 
         [ParserState]
