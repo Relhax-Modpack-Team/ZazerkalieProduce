@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,6 +15,12 @@ namespace ZazerkalieProduce
     class Program
     {
         static void Main(string[] args)
+        {
+            AttachAssemblyResolver();
+            ActuallyRunProgram(args);
+        }
+
+        public static void ActuallyRunProgram(string[] args)
         {
             var options = new Options();
             if (CommandLine.Parser.Default.ParseArguments(args, options))
@@ -35,9 +43,9 @@ namespace ZazerkalieProduce
 
                 //get a list of all swf worker types that exist in the program
                 var swfWorkerTypes = (from domainAssembly in AppDomain.CurrentDomain.GetAssemblies()
-                                from assemblyType in domainAssembly.GetTypes()
-                                where typeof(BaseSwfWorker).IsAssignableFrom(assemblyType) && !assemblyType.IsAbstract
-                                select assemblyType).ToArray();
+                                      from assemblyType in domainAssembly.GetTypes()
+                                      where typeof(BaseSwfWorker).IsAssignableFrom(assemblyType) && !assemblyType.IsAbstract
+                                      select assemblyType).ToArray();
 
                 //select the swf worker to use based on the command line options
                 var swfWorker =
@@ -50,9 +58,25 @@ namespace ZazerkalieProduce
                     swfWorker.DoWholeJob();
                 }
             }
-#if DEBUG
-            Console.ReadKey();
-#endif
+        }
+
+        public static void AttachAssemblyResolver()
+        {
+            //handle any assembly resolves
+            //https://stackoverflow.com/a/19806004/3128017
+            AppDomain.CurrentDomain.AssemblyResolve += (sender2, bargs) =>
+            {
+                string dllName = new AssemblyName(bargs.Name).Name + ".dll";
+                Assembly assem = Assembly.GetExecutingAssembly();
+                string resourceName = assem.GetManifestResourceNames().FirstOrDefault(rn => rn.EndsWith(dllName));
+                using (Stream stream = assem.GetManifestResourceStream(resourceName))
+                {
+                    byte[] assemblyData = new byte[stream.Length];
+                    stream.Read(assemblyData, 0, assemblyData.Length);
+                    Console.WriteLine("An assembly was loaded via AssemblyResolve: {0}", dllName);
+                    return Assembly.Load(assemblyData);
+                }
+            };
         }
     }
 }
